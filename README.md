@@ -1,6 +1,6 @@
 # jamulus-tcp-tests
 
-This repo contains some scripts for testing the Jamulus TCP implementation in the Pull Request https://github.com/jamulussoftware/jamulus/pull/3636 using firewall rules in Linux via `nft`. These are applicable to Debian and Raspberry Pi OS. Not sure about other linux distributions.
+This repo contains some scripts for testing the Jamulus TCP implementation in the Pull Request https://github.com/jamulussoftware/jamulus/pull/3636 using firewall rules in Linux via `nft`. These are applicable to **Debian** and **Raspberry Pi OS**. Also to **Ubuntu**. Not sure about other linux distributions.
 
 They could be included in the [main repo](https://github.com/jamulussoftware/jamulus) if desired, but they are primarily of use during the review process prior to merging.
 
@@ -11,6 +11,16 @@ When TCP is enabled, the server will send a `CLM_TCP_SUPPORTED` message after th
 In order to verify that the TCP fallback kicks in when needed, it is necessary to simulate the loss of an outgoing UDP server or client list. This can be done using `nft` firewall rules to drop specific packets. These scripts simplify those actions, and must be run on the same host as the server under test:
 
 All the scripts output the new list of rules to confirm the current state.
+
+### Enable nftables firewall
+
+If necessary, install `nftables` with `sudo apt install nftables`.
+
+If the `nft-list-rules.sh` script below does not output anything, it is probable that the `nftables` firewall has not been enabled or started.
+
+- Start `nftables` with `sudo systemctl start nftables`
+
+To make sure `nftables` is always started, do `sudo systemctl enable nftables`
 
 ### Show current ruleset
 
